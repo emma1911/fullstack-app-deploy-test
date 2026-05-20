@@ -1,0 +1,17 @@
+<div style="text-align: center; margin-top: 50px; font-family: Arial;">
+  <h1>🚀 Angular + Spring Boot Test Project</h1>
+  
+  <div style="margin: 30px; padding: 20px; border: 2px solid #4CAF50; border-radius: 10px;">
+    <h2>Backend Response:</h2>
+    <p style="font-size: 1.3em; color: green;">{{ message }}</p>
+  </div>
+
+  <div *ngIf="data" style="margin: 30px; padding: 20px; border: 2px solid #2196F3; border-radius: 10px;">
+    <h2>{{ data.title }}</h2>
+    <p>{{ data.content }}</p>
+  </div>
+
+  <button (click)="loadMessage()" style="padding: 10px 20px; font-size: 1.1em;">
+    Refresh from Backend
+  </button>
+</div>
