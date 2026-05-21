@@ -10,7 +10,7 @@ pipeline {
 
         stage('Clone Project') {
             steps {
-                git 'https://github.com/USERNAME/fullstack-app-deploy-test.git'
+                git 'https://github.com/emma1911/fullstack-app-deploy-test.git'
             }
         }
 
