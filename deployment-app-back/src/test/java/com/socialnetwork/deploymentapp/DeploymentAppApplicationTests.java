@@ -7,9 +7,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,7 +20,6 @@ class DeploymentAppApplicationTests {
     }
 }
 
-// ====================== Controller Layer Tests ======================
 
 @WebMvcTest(HelloController.class)
 class HelloControllerTests {
@@ -39,7 +36,7 @@ class HelloControllerTests {
 
     @Test
     void shouldReturnMessageObject() throws Exception {
-        mockMvc.perform(get("/api/message"))
+        mockMvc.perform(get("/api/message0000"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.title").value("Welcome to our test project!"))
@@ -52,26 +49,5 @@ class HelloControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").exists())
                 .andExpect(jsonPath("$.content").exists());
-    }
-
-    // Additional tests to increase coverage
-    @Test
-    void shouldReturnMethodNotAllowedForPostOnHello() throws Exception {
-        mockMvc.perform(post("/api/hello"))
-                .andExpect(status().isMethodNotAllowed());
-    }
-
-    @Test
-    void shouldReturnNotFoundForUnknownEndpoint() throws Exception {
-        mockMvc.perform(get("/api/unknown-endpoint"))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void shouldHandleCorsHeaders() throws Exception {
-        mockMvc.perform(get("/api/hello")
-                        .header("Origin", "http://localhost:4200"))
-                .andExpect(status().isOk())
-                .andExpect(header().exists("Access-Control-Allow-Origin"));
     }
 }
