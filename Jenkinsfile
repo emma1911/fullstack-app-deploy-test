@@ -54,5 +54,12 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Nexus') {
+            steps {
+                echo 'Publication sur Nexus...'
+                sh 'mvn deploy -DskipTests -s settings.xml'
+            }
+        }
     }
 }
