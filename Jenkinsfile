@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    
+    tools {
+        jdk 'jdk21'
+        maven 'maven'
+        nodejs 'nodejs'
+    }
+
+    stages {
+        stage('Debug Java Version') {
+            steps {
+                sh '''
+                    echo "=== JAVA_HOME ==="
+                    echo $JAVA_HOME
+                    echo "=== Java Version ==="
+                    java -version
+                    echo "=== Maven Version ==="
+                    mvn -version
+                '''
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('deployment-app-back') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('deployment-app-front') {
+                    sh 'npm ci'
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    dir('deployment-app-back') {
+                        sh 'mvn sonar:sonar -DskipTests'
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+}

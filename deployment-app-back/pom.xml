@@ -18,7 +18,6 @@
 
     <properties>
         <java.version>17</java.version>
-        <!-- Force source/target instead of release flag -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
@@ -34,7 +33,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
