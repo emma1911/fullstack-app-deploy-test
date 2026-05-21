@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     tools {
+        jdk 'jdk21'
         nodejs 'nodejs'
         maven 'maven'
     }
@@ -40,7 +41,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    dir('backend') {
+                    dir('deployment-app-back') {
                         sh 'mvn sonar:sonar -DskipTests'
                     }
                 }
