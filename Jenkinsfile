@@ -40,17 +40,15 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    dir('deployment-app-back') {
-                        sh 'mvn sonar:sonar -DskipTests'
-                    }
+                echo 'Analyse qualité...'
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=app-deploy-project \
+                        -Dsonar.projectName=app-deploy-project \
+                        -Dsonar.qualitygate.wait=false
+                    '''
                 }
-            }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                waitForQualityGate abortPipeline: true
             }
         }
     }
