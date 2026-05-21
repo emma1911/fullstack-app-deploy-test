@@ -42,12 +42,14 @@ pipeline {
             steps {
                 echo 'Analyse qualité...'
                 withSonarQubeEnv('sonarqube') {
-                    sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=app-deploy-project \
-                        -Dsonar.projectName=app-deploy-project \
-                        -Dsonar.qualitygate.wait=false
-                    '''
+                    dir('deployment-app-back') {         
+                        sh '''
+                            mvn sonar:sonar \
+                                -Dsonar.projectKey=com.socialnetwork:deployment-app \
+                                -Dsonar.projectName=deployment-app \
+                                -Dsonar.qualitygate.wait=false
+                        '''
+                    }
                 }
             }
         }
