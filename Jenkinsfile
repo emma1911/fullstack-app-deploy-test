@@ -41,7 +41,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo 'Analyse qualité...'
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('sonarqube') {
                     sh '''
                         mvn sonar:sonar \
                         -Dsonar.projectKey=app-deploy-project \
