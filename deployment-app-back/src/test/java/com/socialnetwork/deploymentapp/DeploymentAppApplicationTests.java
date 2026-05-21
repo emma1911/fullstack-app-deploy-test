@@ -26,6 +26,8 @@ class HelloControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
+    private MockMvc mockMvc2;
+    private MockMvc mockMvc3;
 
     @Test
     void shouldReturnHelloMessage() throws Exception {
@@ -36,7 +38,7 @@ class HelloControllerTests {
 
     @Test
     void shouldReturnMessageObject() throws Exception {
-        mockMvc.perform(get("/api/message0000"))
+        mockMvc.perform(get("/api/message"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.title").value("Welcome to our test project!"))
