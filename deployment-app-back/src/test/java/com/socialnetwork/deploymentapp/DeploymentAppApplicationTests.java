@@ -7,7 +7,9 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,7 +22,7 @@ class DeploymentAppApplicationTests {
     }
 }
 
-// ==================== Controller Tests ====================
+// ====================== Controller Layer Tests ======================
 
 @WebMvcTest(HelloController.class)
 class HelloControllerTests {
@@ -50,5 +52,26 @@ class HelloControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").exists())
                 .andExpect(jsonPath("$.content").exists());
+    }
+
+    // Additional tests to increase coverage
+    @Test
+    void shouldReturnMethodNotAllowedForPostOnHello() throws Exception {
+        mockMvc.perform(post("/api/hello"))
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    void shouldReturnNotFoundForUnknownEndpoint() throws Exception {
+        mockMvc.perform(get("/api/unknown-endpoint"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldHandleCorsHeaders() throws Exception {
+        mockMvc.perform(get("/api/hello")
+                        .header("Origin", "http://localhost:4200"))
+                .andExpect(status().isOk())
+                .andExpect(header().exists("Access-Control-Allow-Origin"));
     }
 }
