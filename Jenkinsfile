@@ -45,8 +45,8 @@ pipeline {
                     dir('deployment-app-back') {         
                         sh '''
                             mvn sonar:sonar \
-                                -Dsonar.projectKey=com.socialnetwork:deployment-app \
-                                -Dsonar.projectName=deployment-app \
+                                -Dsonar.projectKey=com.socialnetwork:app-deploy-project \
+                                -Dsonar.projectName=app-deploy-project \
                                 -Dsonar.qualitygate.wait=false
                         '''
                     }
