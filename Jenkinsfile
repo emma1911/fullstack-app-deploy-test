@@ -1,23 +1,23 @@
 pipeline {
     agent any
-
+    
     tools {
         jdk 'jdk21'
-        nodejs 'nodejs'
         maven 'maven'
+        nodejs 'nodejs'
     }
 
     stages {
-        stage('Declarative: Checkout SCM') {
+        stage('Debug Java Version') {
             steps {
-                checkout scm 
-            }
-        }
-
-        stage('Clone Project') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/emma1911/fullstack-app-deploy-test.git'
+                sh '''
+                    echo "=== JAVA_HOME ==="
+                    echo $JAVA_HOME
+                    echo "=== Java Version ==="
+                    java -version
+                    echo "=== Maven Version ==="
+                    mvn -version
+                '''
             }
         }
 
@@ -51,12 +51,6 @@ pipeline {
         stage('Quality Gate') {
             steps {
                 waitForQualityGate abortPipeline: true
-            }
-        }
-
-        stage('Upload to Nexus') {
-            steps {
-                echo 'Uploading to Nexus...'
             }
         }
     }
