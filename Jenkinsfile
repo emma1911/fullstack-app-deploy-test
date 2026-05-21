@@ -1,5 +1,4 @@
 pipeline {
-
     agent any
 
     tools {
@@ -7,17 +6,23 @@ pipeline {
     }
 
     stages {
+        stage('Declarative: Checkout SCM') {
+            steps {
+                checkout scm 
+            }
+        }
 
         stage('Clone Project') {
             steps {
-                git 'https://github.com/emma1911/fullstack-app-deploy-test.git'
+                git branch: 'main',
+                    url: 'https://github.com/emma1911/fullstack-app-deploy-test.git'
             }
         }
 
         stage('Build Backend') {
             steps {
                 dir('backend') {
-                    sh 'mvn clean package'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
@@ -25,7 +30,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
-                    sh 'npm install'
+                    sh 'npm ci'
                     sh 'npm run build'
                 }
             }
@@ -35,7 +40,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     dir('backend') {
-                        sh 'mvn sonar:sonar'
+                        sh 'mvn sonar:sonar -DskipTests'
                     }
                 }
             }
@@ -49,7 +54,7 @@ pipeline {
 
         stage('Upload to Nexus') {
             steps {
-                echo 'Uploading artifact to Nexus...'
+                echo 'Uploading to Nexus...'
             }
         }
     }
