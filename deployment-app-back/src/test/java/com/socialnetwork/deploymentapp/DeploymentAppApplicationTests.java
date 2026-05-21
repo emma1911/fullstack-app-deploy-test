@@ -26,8 +26,6 @@ class HelloControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
-    private MockMvc mockMvc2;
-    private MockMvc mockMvc3;
 
     @Test
     void shouldReturnHelloMessage() throws Exception {
