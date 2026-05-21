@@ -47,6 +47,7 @@ pipeline {
                             mvn sonar:sonar \
                                 -Dsonar.projectKey=com.socialnetwork:app-deploy-project \
                                 -Dsonar.projectName=app-deploy-project \
+                                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
                                 -Dsonar.qualitygate.wait=false
                         '''
                     }
