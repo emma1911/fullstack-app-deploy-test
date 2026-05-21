@@ -22,7 +22,7 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                dir('backend') {
+                dir('deployment-app-back') {
                     sh 'mvn clean package -DskipTests'
                 }
             }
@@ -30,7 +30,7 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                dir('frontend') {
+                dir('deployment-app-front') {
                     sh 'npm ci'
                     sh 'npm run build'
                 }
