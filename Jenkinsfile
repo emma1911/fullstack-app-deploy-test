@@ -8,19 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Debug Java Version') {
-            steps {
-                sh '''
-                    echo "=== JAVA_HOME ==="
-                    echo $JAVA_HOME
-                    echo "=== Java Version ==="
-                    java -version
-                    echo "=== Maven Version ==="
-                    mvn -version
-                '''
-            }
-        }
-
+        
         stage('Build Backend') {
             steps {
                 dir('deployment-app-back') {
