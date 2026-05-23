@@ -1,5 +1,6 @@
 # CI/CD Tools Installation Report
-
+https://chatgpt.com/share/6a1054c9-4d64-83ea-85f7-8cf157035199
+https://chatgpt.com/share/6a0c37f2-df78-83ea-ac7f-a785ce63bfaa
 This repository contains the documentation and practical steps for installing and testing two essential tools used in a CI/CD environment:
 
 - SonarQube
